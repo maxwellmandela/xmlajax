@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>upesi</title>
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    </head>
+    <body>
+        <div id="data"></div>
+
+        <script>
+            var cdata;
+            cdata="\<\?xml version=\"1.0\" \?\>";
+            cdata+="<Books>";
+            cdata+="<Book><Title>Life of Pi</Title><Author>Yann Martel</Author></Book>";
+            cdata+="<Book><Title>Life of Max</Title><Author>Max Mandela</Author></Book>";
+            cdata+="</Books>";
+
+            var options={};
+            options.url="server.php";
+            options.method="post";
+            options.data=cdata;
+            options.contentType="text/xml";
+
+            $.ajax(options).done(function(data){
+                //working
+                //var clientid = $(data).find('Book');//.text();
+                //alert(clientid);
+                //$(clientid).each(function() {
+                    //$("#data").append($(this).find('Title').text()+', '+$(this).find('Author').text()+"<br>");
+                    //alert($(this).find('Title').text());
+                //});
+
+                //response form server
+                console.log(data);
+
+                //var clientid = $(data).find('news');
+                //$(clientid).each(function() {
+                //    alert($(this).find('by').text()+ ',  '+$(data).find('content').text());
+                //});
+            });
+        </script>
+    </body>
+</html>
