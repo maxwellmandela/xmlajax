@@ -6,38 +6,54 @@
         <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     </head>
     <body>
+        <form>
+            <input type="text" id="title"><br>
+            <input type="text" id="author"><br>
+            <p id="submitted"><button id="submit">Save</button></p>
+        </form>
+        <hr>
         <div id="data"></div>
 
         <script>
-            var cdata;
-            cdata="\<\?xml version=\"1.0\" \?\>";
-            cdata+="<Books>";
-            cdata+="<Book><Title>Life of Pi</Title><Author>Yann Martel</Author></Book>";
-            cdata+="<Book><Title>Life of Max</Title><Author>Max Mandela</Author></Book>";
-            cdata+="</Books>";
+            $("#submit").click(function(event){
+                event.preventDefault();
+                //this.id = 'submitted';
+                $("#submitted").html("please wait");
+                var newbook =  "<Book><Title>"+$('#title').val()+"</Title><Author>"+$('#author').val()+"</Author></Book>";
+            
+                var cdata;
+                cdata="\<\?xml version=\"1.0\" \?\>";
+                cdata+="<Books>";
+                cdata+="<Book><Title>Life of Pi</Title><Author>Yann Martel</Author></Book>";
+                cdata+=newbook;
+                cdata+="</Books>";
 
-            var options={};
-            options.url="server.php";
-            options.method="post";
-            options.data=cdata;
-            options.contentType="text/xml";
+                var options={};
+                options.url="server.php";
+                options.method="post";
+                options.data=cdata;
+                options.contentType="text/xml";
 
-            $.ajax(options).done(function(data){
-                //working
-                //var clientid = $(data).find('Book');//.text();
-                //alert(clientid);
-                //$(clientid).each(function() {
-                    //$("#data").append($(this).find('Title').text()+', '+$(this).find('Author').text()+"<br>");
-                    //alert($(this).find('Title').text());
-                //});
+                $.ajax(options).done(function(data){
+                    //working
+                    var clientid = $(data).find('Book');//.text();
+                    //alert(clientid);
+                    $(clientid).each(function() {
+                        $("#data").append($(this).find('Title').text()+', '+$(this).find('Author').text()+"<br>");
+                        //alert($(this).find('Title').text());
+                    });
 
-                //response form server
-                console.log(data);
+                    //response form server
+                    console.log(data);
+                    $("#submitted").html("Awsome!");
 
-                //var clientid = $(data).find('news');
-                //$(clientid).each(function() {
-                //    alert($(this).find('by').text()+ ',  '+$(data).find('content').text());
-                //});
+                    /*var clientid = $(data).find('movie');
+                    $(clientid).each(function() {
+                        $("#data").append($(this).find('title').text()+ '; Plot::'+$(this).find('plot').text()+'<br>');
+                    });*/
+                }).error(function(){
+                    alert("error occured");
+                });
             });
         </script>
     </body>
