@@ -3,6 +3,8 @@
 //$xml =  file_get_contents("http://demo.mtmlive.net/webservice/api/xml/reply/GetExchangeRates");
 //echo $xml;
 
+//$currency = file_get_contents('php://input');
+$curr = $_GET['currency'];
 
 function xml2Json($url) {
 	$fileContents= file_get_contents($url);
@@ -18,11 +20,12 @@ $json = xml2Json("http://demo.mtmlive.net/webservice/api/xml/reply/GetExchangeRa
 $exchange_rates = json_decode($json)->ExchangeRates->ExchangeRate;
 
 foreach($exchange_rates as $exch){
-	if($exch->FromCurrency == 'UGX'){
-
-		print "<pre>";
-		print_r($exch);
-		print "</pre>";
+	if($exch->ToCurrency == $curr){
+		$rate = json_encode($exch);
+		print $rate;
+		//print "<pre>";
+		//print_r($exch);
+		//print "</pre>";
 		break;
 	}
 }

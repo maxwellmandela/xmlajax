@@ -25,13 +25,13 @@
     <body class="container">
         <div class="col-sm-6 col-sm-offset-3 jumbotron" style="margin-top:5%;">
         <select class="form-control" id="changecurrency">
+            <option selected="selected" disabled="true">Select Currency</option>
             <option value="KES">Kenya</option>
-            <option value="RWS">Rwanda</option>
-            <option value="TZ">Tanzania</option>
-            <option value="UGS">Uganda</option>
-            <option value="USD">United States</option>
+            <option value="RWF">Rwanda</option>
+            <option value="TZS">Tanzania</option>
+            <option value="UGX">Uganda</option>
         </select>
-        <h3 class="text text-center">1 USD = <span id="newrate">100.6 KES</span></h3>
+        <h3 class="text text-center"><span id="newrate"><small>change currency to see rate</small></span></h3>
         <div class="row">
             <div class="col-sm-6">
                 <input type="text" class="form-control" id="email" placeholder="Enter Send Amount">
@@ -194,44 +194,13 @@
 
         <script>
             $("#changecurrency").change(function(){
-              //var url = "getExchangeRate.php";
-
-              /*var tocur = "<ToCurrency>"+$("#changecurrency").val()+"</ToCurrency>";
-              var cdata;
-              cdata="\<\?xml version=\"1.0\" \?\>";
-              cdata+="<GetExchangeRates>";
-              cdata+="<FromCurrency>USD</FromCurrency>";
-              cdata+=tocur;
-              cdata+="</GetExchangeRates>";
-
-              var options={};
-              options.url=url;
-              options.method="post";
-              options.data=cdata;
-              options.contentType="text/xml";
-
-              $.ajax(options).done(function(data){
-                  var clientid = $(data).find('d2p1:ExchangeRate');
-                  $(clientid).each(function() {
-                      $("#data").append($(this).find('d2p1:Rate').text()+', '
-                        +$(this).find('d2p1:ToCurrency').text()+"<br>");
-                  });
-                  $("#newrate").html(data);
-                  console.log(data);
-              }).error(function(){
-                  alert("error occured");
-              });*/
               $.ajax({
                 type: "GET",
-                url: "getExchangeRate.php",
+                url: "getExchangeRate.php?currency="+$("#changecurrency").val(),
                 success: function(xmlResponse) {
-                  console.log(xmlResponse);
-                  //var clientid = $(data).find('d2p1:ExchangeRate');
-                  //$(clientid).each(function() {
-                  //    $("#data").html($(this).find('d2p1:Rate').text());
-                  //    console.log($("#data").html($(this).find('d2p1:Rate').text()));
-                  //});
-                  //$("#newrate").html(data);
+                  //console.log(xmlResponse);
+                  var rate = JSON.parse(xmlResponse);
+                  $("#newrate").html("1 USD = "+rate.Rate+ " "+$("#changecurrency").val());
                 },
                 error: function(){
                   alert("error processing");
