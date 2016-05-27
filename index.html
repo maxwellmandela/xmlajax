@@ -194,9 +194,9 @@
 
         <script>
             $("#changecurrency").change(function(){
-              jQuery.support.cors = true;
-              var url = "http://demo.mtmlive.net/xml/reply/GetExchangeRates";
-              var tocur = "<ToCurrency>"+$("#changecurrency").val()+"</ToCurrency>";
+              //var url = "getExchangeRate.php";
+
+              /*var tocur = "<ToCurrency>"+$("#changecurrency").val()+"</ToCurrency>";
               var cdata;
               cdata="\<\?xml version=\"1.0\" \?\>";
               cdata+="<GetExchangeRates>";
@@ -211,16 +211,33 @@
               options.contentType="text/xml";
 
               $.ajax(options).done(function(data){
-                  //var clientid = $(data).find('Book');
-                  //$(clientid).each(function() {
-                  //    $("#data").append($(this).find('Title').text()+', '+$(this).find('Author').text()+"<br>");
-                  //});
+                  var clientid = $(data).find('d2p1:ExchangeRate');
+                  $(clientid).each(function() {
+                      $("#data").append($(this).find('d2p1:Rate').text()+', '
+                        +$(this).find('d2p1:ToCurrency').text()+"<br>");
+                  });
                   $("#newrate").html(data);
                   console.log(data);
               }).error(function(){
                   alert("error occured");
+              });*/
+              $.ajax({
+                type: "GET",
+                url: "getExchangeRate.php",
+                success: function(xmlResponse) {
+                  console.log(xmlResponse);
+                  //var clientid = $(data).find('d2p1:ExchangeRate');
+                  //$(clientid).each(function() {
+                  //    $("#data").html($(this).find('d2p1:Rate').text());
+                  //    console.log($("#data").html($(this).find('d2p1:Rate').text()));
+                  //});
+                  //$("#newrate").html(data);
+                },
+                error: function(){
+                  alert("error processing");
+                }
               });
-            })
+            });
 
             $("#submit").click(function(event){
                 event.preventDefault();
