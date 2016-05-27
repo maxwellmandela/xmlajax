@@ -13,4 +13,16 @@ function xml2Json($url) {
 	return $json;
 }
 
-echo xml2Json("http://demo.mtmlive.net/webservice/api/xml/reply/GetExchangeRates");
+$json = xml2Json("http://demo.mtmlive.net/webservice/api/xml/reply/GetExchangeRates");
+
+$exchange_rates = json_decode($json)->ExchangeRates->ExchangeRate;
+
+foreach($exchange_rates as $exch){
+	if($exch->FromCurrency == 'UGX'){
+
+		print "<pre>";
+		print_r($exch);
+		print "</pre>";
+		break;
+	}
+}
