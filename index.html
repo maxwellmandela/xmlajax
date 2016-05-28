@@ -194,6 +194,7 @@
 
         <script>
             $("#changecurrency").change(function(){
+              
               $.ajax({
                 type: "GET",
                 url: "getExchangeRate.php?currency="+$("#changecurrency").val(),
@@ -250,12 +251,12 @@
             });
 
             $("#send_amount").keyup(function(){
-               var newcharge =  "<GetMTCharge>"
+               var newcharge =  "<GetMTCharge xmlns:i='http://www.w3.org/2001/XMLSchema-instance' xmlns='http://schemas.datacontract.org/2004/07/MTM.DTO'>"
                +"<ClientPassword>String</ClientPassword>"
                +"<ClientUsername>String</ClientUsername>"
                +"<CompanyId>0</CompanyId>"
                +"<CustomerId>0</CustomerId>"
-               +"<DestinationCountryCode>String</DestinationCountryCode>"
+               +"<DestinationCountryCode>KES</DestinationCountryCode>"
                +"<DestinationCurrencyCode>String</DestinationCurrencyCode>"
                +"<PayoutMethod>BankTransfer</PayoutMethod>"
                +"<PrincipalAmount>"+$("#send_amount").val()+"</PrincipalAmount>"
