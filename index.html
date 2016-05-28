@@ -250,28 +250,32 @@
             });
 
             $("#send_amount").keyup(function(){
-              var newbook =  "<GetMTCharge>"
-              +"<ClientPassword>String</ClientPassword>"
-             +"<ClientUsername>String</ClientUsername>"
-             +"<CompanyId>0</CompanyId>"
-             +"<CustomerId>0</CustomerId>"
-             +"<DestinationCountryCode>String</DestinationCountryCode>"
-             +"<DestinationCurrencyCode>String</DestinationCurrencyCode>"
-             +"<PayoutMethod>BankTransfer</PayoutMethod>"
-             +"<PrincipalAmount>"+$("#send_amount").val()+"</PrincipalAmount>"
-             +"<ServiceId>0</ServiceId>"
-             +"</GetMTCharge>";
+               var newcharge =  "<GetMTCharge>"
+               +"<ClientPassword>String</ClientPassword>"
+               +"<ClientUsername>String</ClientUsername>"
+               +"<CompanyId>0</CompanyId>"
+               +"<CustomerId>0</CustomerId>"
+               +"<DestinationCountryCode>String</DestinationCountryCode>"
+               +"<DestinationCurrencyCode>String</DestinationCurrencyCode>"
+               +"<PayoutMethod>BankTransfer</PayoutMethod>"
+               +"<PrincipalAmount>"+$("#send_amount").val()+"</PrincipalAmount>"
+               +"<ServiceId>0</ServiceId>"
+               +"</GetMTCharge>";
 
-             var options={};
-                options.url="GetMTCharge.php";
+               var options={};
+                options.url="getCharge.php";
                 options.method="post";
-                options.data=cdata;
+                options.data=newcharge;
                 options.contentType="text/xml";
 
                 $.ajax(options).done(function(data){
+                  console.log(data);
+                }).error(function(){
+                    console.log("error occured");
+                });
 
-              $("#receive_amount").val($("#send_amount").val());
-            })
+              //$("#receive_amount").val($("#send_amount").val());
+            });
         </script>
     </body>
 </html>
