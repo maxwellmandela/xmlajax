@@ -34,10 +34,10 @@
         <h3 class="text text-center"><span id="newrate"><small>change currency to see rate</small></span></h3>
         <div class="row">
             <div class="col-sm-6">
-                <input type="text" class="form-control" id="email" placeholder="Enter Send Amount">
+                <input type="text" class="form-control" id="send_amount" placeholder="Enter Send Amount">
             </div>
             <div class="col-sm-6">
-                <input type="text" class="form-control" id="email" placeholder="Enter Receive Amount">
+                <input type="text" class="form-control" id="receive_amount" placeholder="Enter Receive Amount">
             </div>
         </div>
         <br>
@@ -198,7 +198,7 @@
                 type: "GET",
                 url: "getExchangeRate.php?currency="+$("#changecurrency").val(),
                 success: function(xmlResponse) {
-                  //console.log(xmlResponse);
+                  console.log(xmlResponse);
                   var rate = JSON.parse(xmlResponse);
                   $("#newrate").html("1 USD = "+rate.Rate+ " "+$("#changecurrency").val());
                 },
@@ -248,6 +248,30 @@
                     alert("error occured");
                 });
             });
+
+            $("#send_amount").keyup(function(){
+              var newbook =  "<GetMTCharge>"
+              +"<ClientPassword>String</ClientPassword>"
+             +"<ClientUsername>String</ClientUsername>"
+             +"<CompanyId>0</CompanyId>"
+             +"<CustomerId>0</CustomerId>"
+             +"<DestinationCountryCode>String</DestinationCountryCode>"
+             +"<DestinationCurrencyCode>String</DestinationCurrencyCode>"
+             +"<PayoutMethod>BankTransfer</PayoutMethod>"
+             +"<PrincipalAmount>"+$("#send_amount").val()+"</PrincipalAmount>"
+             +"<ServiceId>0</ServiceId>"
+             +"</GetMTCharge>";
+
+             var options={};
+                options.url="GetMTCharge.php";
+                options.method="post";
+                options.data=cdata;
+                options.contentType="text/xml";
+
+                $.ajax(options).done(function(data){
+
+              $("#receive_amount").val($("#send_amount").val());
+            })
         </script>
     </body>
 </html>
