@@ -31,15 +31,27 @@
             <option value="TZS|+255">Tanzania</option>
             <option value="UGX|+265">Uganda</option>
         </select>
-        <h3 class="text text-center"><span id="newrate"><small>change currency to see rate</small></span></h3>
+        <p class="text text-center"><span id="newrate"><small>change currency to see rate</small></span></p>
         <div class="row">
             <div class="col-sm-6">
-                <input type="text" class="form-control" id="send_amount" placeholder="Enter Send Amount">
+                <!--<input type="text" class="form-control" id="send_amount" placeholder="Enter Send Amount">-->
+                <div class="input-group">
+                    <input type="text" class="form-control" id="send_amount" placeholder="Enter Send Amount">
+                    <span class="input-group-addon" id="do_send_amount">
+                        <i id="spinner" class="fa fa-arrow-right" aria-hidden="true"></i>
+                    </span>
+                </div>
             </div>
             <div class="col-sm-6">
-                <input type="text" class="form-control" id="receive_amount" placeholder="Enter Receive Amount">
+                <div class="input-group">
+                    <span class="input-group-addon" id="do_receive_amount">
+                        <i id="spin" class="fa fa-arrow-left" aria-hidden="true"></i>
+                    </span>
+                    <input type="text" class="form-control" id="receive_amount" placeholder="Enter Receive Amount">
+                </div>
             </div>
         </div>
+        <p id="process" class="text text-center"></p>
         <br>
 
         <!-- Trigger the modal with a button -->
@@ -187,10 +199,6 @@
         </div>
 
         </div>
-        <div class="row">
-            <hrr>
-            <div id="data"></div>
-        </div>
 
         <script>
             $("#changecurrency").change(function(){
@@ -206,7 +214,7 @@
                 type: "GET",
                 url: "getExchangeRate.php?currency="+currency_symbol,
                 success: function(xmlResponse) {
-                  console.log(xmlResponse);
+                  //console.log(xmlResponse);
                   var rate = JSON.parse(xmlResponse);
                   $("#newrate").html("1 USD = "+rate.Rate+ " "+currency_symbol);
                 },
@@ -257,8 +265,9 @@
                 });
             });*/
 
-            $("#send_amount").focusout(function(){
-              if ($.isNumeric($("#send_amount").val())) {
+            $("#do_send_amount").click(function(){
+                $("#spinner").addClass("fa-spinner");
+              if ($.isNumeric($("#send_amount").val()) && localStorage.getItem("current_currency") !== null) {
                  var principle_amount = eval($("#send_amount").val());
                  var dest_curr = localStorage.getItem("current_currency");
                  var dest_curr_code = localStorage.getItem("country_code");
@@ -291,19 +300,78 @@
                         success: function(xmlResponse) {
                           //console.log(xmlResponse);
                           var rate = JSON.parse(xmlResponse).Rate;
-                          var tosend = (eval(charge)+principle_amount);
-                          var toreceive = (tosend*rate);
+                          var tosend = (eval(charge)-principle_amount);
+                          var toreceive = Math.abs((tosend*rate)).toFixed(4);
                           //console.log(tosend +" , "+toreceive);
                           $("#receive_amount").val(toreceive);
                         },
                         error: function(){
-                          alert("error processing");
+                            $("#spinner").removeClass("fa-spinner");
+                            $("#process").html("error, try again later");
                         }
                       });
+                      $("#spinner").removeClass("fa-spinner");
+                      $("#process").html("");
                   }).error(function(){
-                      console.log("error occured");
+                      $("#spinner").removeClass("fa-spinner");
+                      $("#process").html("error, try again later");
                   });
               }
+            });
+
+            $("#do_receive_amount").click(function(){
+                $("#spin").addClass("fa-spinner");
+                if ($.isNumeric($("#receive_amount").val()) && localStorage.getItem("current_currency") !== null) {
+                    var principle_amount = eval($("#receive_amount").val());
+                    var dest_curr = localStorage.getItem("current_currency");
+                    var dest_curr_code = localStorage.getItem("country_code");
+
+                    $.ajax({
+                        type: "GET",
+                        url: "getExchangeRate.php?currency="+localStorage.getItem("current_currency"),
+                        success: function(xmlResponse) {
+                            //console.log(xmlResponse);
+                            var rate = JSON.parse(xmlResponse).Rate;
+                            var tosend = (principle_amount/rate);
+
+                            //get charge
+                            var newcharge =  "<GetMTCharge xmlns:i='http://www.w3.org/2001/XMLSchema-instance' xmlns='http://schemas.datacontract.org/2004/07/MTM.DTO'>"
+                            +"<ClientPassword>String</ClientPassword>"
+                            +"<ClientUsername>String</ClientUsername>"
+                            +"<CompanyId>0</CompanyId>"
+                            +"<CustomerId>0</CustomerId>"
+                            +"<DestinationCountryCode>"+dest_curr_code+"</DestinationCountryCode>"
+                            +"<DestinationCurrencyCode>"+dest_curr+"</DestinationCurrencyCode>"
+                            +"<PayoutMethod>BankTransfer</PayoutMethod>"
+                            +"<PrincipalAmount>"+tosend+"</PrincipalAmount>"
+                            +"<ServiceId>0</ServiceId>"
+                            +"</GetMTCharge>";
+
+                            //"+localStorage.getItem("current_currency")+"
+
+                            var options={};
+                            options.url="getCharge.php";
+                            options.method="post";
+                            options.data=newcharge;
+                            options.contentType="text/xml";
+
+                            $.ajax(options).done(function(data){
+                                //console.log(data);
+                                var charge = eval($(data).find('Message').text());
+                                $("#send_amount").val((tosend+charge).toFixed(4));
+                            }).error(function(){
+                                $("#spin").removeClass("fa-spinner");
+                                $("#process").html("error, try again later");
+                            });
+                            $("#spin").removeClass("fa-spinner");
+                            $("#process").html("");
+                        },
+                        error: function(){
+                            $("#spin").removeClass("fa-spinner");
+                            $("#process").html("error, try again later");
+                        }
+                    });
+                }
             });
         </script>
     </body>
