@@ -26,10 +26,10 @@
         <div class="col-sm-6 col-sm-offset-3 jumbotron" style="margin-top:5%;">
         <select class="form-control" id="changecurrency">
             <option selected="selected" disabled="true">Select Currency</option>
-            <option value="KES">Kenya</option>
-            <option value="RWF">Rwanda</option>
-            <option value="TZS">Tanzania</option>
-            <option value="UGX">Uganda</option>
+            <option value="KES|+254">Kenya</option>
+            <option value="RWF|+250">Rwanda</option>
+            <option value="TZS|+255">Tanzania</option>
+            <option value="UGX|+265">Uganda</option>
         </select>
         <h3 class="text text-center"><span id="newrate"><small>change currency to see rate</small></span></h3>
         <div class="row">
@@ -194,14 +194,21 @@
 
         <script>
             $("#changecurrency").change(function(){
-              localStorage.setItem("current_currency", $("#changecurrency").val());
+              var currencies = $("#changecurrency").val();
+              var curr = currencies.split('|');
+              var currency_symbol = curr[0];
+              var country_code = curr[1];
+
+              localStorage.setItem("current_currency", currency_symbol);
+              localStorage.setItem("country_code", country_code);
+
               $.ajax({
                 type: "GET",
-                url: "getExchangeRate.php?currency="+$("#changecurrency").val(),
+                url: "getExchangeRate.php?currency="+currency_symbol,
                 success: function(xmlResponse) {
                   console.log(xmlResponse);
                   var rate = JSON.parse(xmlResponse);
-                  $("#newrate").html("1 USD = "+rate.Rate+ " "+$("#changecurrency").val());
+                  $("#newrate").html("1 USD = "+rate.Rate+ " "+currency_symbol);
                 },
                 error: function(){
                   alert("error processing");
@@ -209,7 +216,7 @@
               });
             });
 
-            $("#submit").click(function(event){
+            /*$("#submit").click(function(event){
                 event.preventDefault();
                 //this.id = 'submitted';
                 $("#submitted").html("please wait");
@@ -241,28 +248,30 @@
                     console.log(data);
                     $("#submitted").html("Awsome!");
 
-                    /*var clientid = $(data).find('movie');
+                    var clientid = $(data).find('movie');
                     $(clientid).each(function() {
                         $("#data").append($(this).find('title').text()+ '; Plot::'+$(this).find('plot').text()+'<br>');
-                    });*/
+                    });
                 }).error(function(){
                     alert("error occured");
                 });
-            });
+            });*/
 
-            $("#send_amount").keyup(function(){
+            $("#send_amount").focusout(function(){
               if ($.isNumeric($("#send_amount").val())) {
+                 var principle_amount = eval($("#send_amount").val());
+                 var dest_curr = localStorage.getItem("current_currency");
+                 var dest_curr_code = localStorage.getItem("country_code");
                  var newcharge =  "<GetMTCharge xmlns:i='http://www.w3.org/2001/XMLSchema-instance' xmlns='http://schemas.datacontract.org/2004/07/MTM.DTO'>"
-                 +"<ClientPassword>String</ClientPassword>"
-                 +"<ClientUsername>String</ClientUsername>"
-                 +"<CompanyId>0</CompanyId>"
-                 +"<CustomerId>0</CustomerId>"
-                 +"<DestinationCountryCode>+254</DestinationCountryCode>"
-                 +"<DestinationCurrencyCode>"+localStorage.getItem("current_currency")
-                 +"</DestinationCurrencyCode>"
-                 +"<PayoutMethod>BankTransfer</PayoutMethod>"
-                 +"<PrincipalAmount>"+$("#send_amount").val()+"</PrincipalAmount>"
-                 +"<ServiceId>0</ServiceId>"
+                   +"<ClientPassword>String</ClientPassword>"
+                   +"<ClientUsername>String</ClientUsername>"
+                   +"<CompanyId>0</CompanyId>"
+                   +"<CustomerId>0</CustomerId>"
+                   +"<DestinationCountryCode>"+dest_curr_code+"</DestinationCountryCode>"
+                   +"<DestinationCurrencyCode>"+dest_curr+"</DestinationCurrencyCode>"
+                   +"<PayoutMethod>BankTransfer</PayoutMethod>"
+                   +"<PrincipalAmount>"+$("#send_amount").val()+"</PrincipalAmount>"
+                   +"<ServiceId>0</ServiceId>"
                  +"</GetMTCharge>";
 
                  //"+localStorage.getItem("current_currency")+"
@@ -274,14 +283,26 @@
                   options.contentType="text/xml";
 
                   $.ajax(options).done(function(data){
-                    console.log(data);
-                    var clientid = $(data).find('Message').text();
-                      $("#receive_amount").val(clientid);
+                    //console.log(data);
+                    var charge = $(data).find('Message').text();
+                      $.ajax({
+                        type: "GET",
+                        url: "getExchangeRate.php?currency="+localStorage.getItem("current_currency"),
+                        success: function(xmlResponse) {
+                          //console.log(xmlResponse);
+                          var rate = JSON.parse(xmlResponse).Rate;
+                          var tosend = (eval(charge)+principle_amount);
+                          var toreceive = (tosend*rate);
+                          //console.log(tosend +" , "+toreceive);
+                          $("#receive_amount").val(toreceive);
+                        },
+                        error: function(){
+                          alert("error processing");
+                        }
+                      });
                   }).error(function(){
                       console.log("error occured");
                   });
-
-                //$("#receive_amount").val($("#send_amount").val());
               }
             });
         </script>
