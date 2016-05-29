@@ -216,7 +216,8 @@
                 success: function(xmlResponse) {
                   //console.log(xmlResponse);
                   var rate = JSON.parse(xmlResponse);
-                  $("#newrate").html("1 USD = "+rate.Rate+ " "+currency_symbol);
+                  var rate = eval(rate.Rate);
+                  $("#newrate").html("1$ = "+rate+ " "+currency_symbol);
                 },
                 error: function(){
                   alert("error processing");
