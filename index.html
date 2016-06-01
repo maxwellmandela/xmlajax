@@ -75,7 +75,7 @@
             </div>
         </div>
 
-        <!--LOgin Modal -->
+        <!--Login Modal -->
         <div id="loginModal" class="modal fade" role="dialog">
           <div class="modal-dialog">
 
@@ -87,7 +87,7 @@
                 <small>Sign in using your registered account:</small>
               </div>
               <div class="modal-body">
-                <form class="form-horizontal" role="form">
+                <formm class="form-horizontal" role="form" autocomplete="off" method="post" action="">
                   <div class="form-group">
                     <label class="control-label col-sm-2" for="email">Email:</label>
                     <div class="col-sm-10">
@@ -97,7 +97,7 @@
                   <div class="form-group">
                     <label class="control-label col-sm-2" for="pwd">Password:</label>
                     <div class="col-sm-10"> 
-                      <input type="password" class="form-control" id="pwd" placeholder="Enter password" autocomplete="off">
+                      <input type="password" class="form-control" id="password" placeholder="Enter password" autocomplete="off">
                     </div>
                   </div>
                   <div class="form-group"> 
@@ -109,10 +109,10 @@
                   </div>
                   <div class="form-group"> 
                     <div class="col-sm-offset-2 col-sm-10">
-                      <button type="submit" class="btn btn-warning">Submit</button>
+                      <button type="submit" class="btn btn-warning" id="sign_in">Sign In</button>
                     </div>
                   </div>
-                </form>
+                </formm>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -134,27 +134,27 @@
                 <small>Create your free account:</small>
               </div>
               <div class="modal-body">
-                <form class="form-horizontal" role="form" autocomplete="off">
+                <formm class="form-horizontal" role="form" autocomplete="off">
                   <div class="form-group">
-                    <label class="control-label col-sm-2" for="email">Name:</label>
+                    <label class="control-label col-sm-2" for="reg_email">Name:</label>
                     <div class="col-sm-5">
-                      <input type="text" class="form-control" id="email" placeholder="Enter first name">
+                      <input type="text" class="form-control" id="reg_email" placeholder="Enter first name">
                     </div>
                     <div class="col-sm-5">
-                      <input type="text" class="form-control" id="email" placeholder="Enter last name">
+                      <input type="text" class="form-control" id="reg_email" placeholder="Enter last name">
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="control-label col-sm-2" for="email">Address:</label>
+                    <label class="control-label col-sm-2" for="reg_email">Address:</label>
                     <div class="col-sm-5">
-                      <input type="text" class="form-control" id="email" placeholder="Enter Address">
+                      <input type="text" class="form-control" id="reg_email" placeholder="Enter Address">
                     </div>
                     <div class="col-sm-5">
-                      <input type="text" class="form-control" id="email" placeholder="Enter Postcode">
+                      <input type="text" class="form-control" id="reg_email" placeholder="Enter Postcode">
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="control-label col-sm-2" for="email">Country:</label>
+                    <label class="control-label col-sm-2" for="reg_email">Country:</label>
                     <div class="col-sm-5">
                       <select class="form-control" id="sel1">
                         <option value="100.6 KES">Kenya</option>
@@ -165,30 +165,30 @@
                       </select>
                     </div>
                     <div class="col-sm-5">
-                      <input type="text" class="form-control" id="email" placeholder="Enter City/Town">
+                      <input type="text" class="form-control" id="reg_email" placeholder="Enter City/Town">
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="control-label col-sm-2" for="email">Email:</label>
+                    <label class="control-label col-sm-2" for="reg_email">Email:</label>
                     <div class="col-sm-10">
-                      <input type="email" class="form-control" id="email" placeholder="Enter email">
+                      <input type="email" class="form-control" id="reg_email" placeholder="Enter email">
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="control-label col-sm-2" for="pwd">Password:</label>
+                    <label class="control-label col-sm-2" for="reg_">Password:</label>
                     <div class="col-sm-5"> 
-                      <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+                      <input type="password" class="form-control" id="reg_" placeholder="Enter password">
                     </div>
                     <div class="col-sm-5"> 
-                      <input type="password" class="form-control" id="pwd" placeholder="Confirm password">
+                      <input type="password" class="form-control" id="reg_" placeholder="Confirm password">
                     </div>
                   </div>
                   <div class="form-group"> 
                     <div class="col-sm-offset-2 col-sm-10">
-                      <button type="submit" class="btn btn-inverse">Register</button>
+                      <button type="submit" class="btn btn-inverse" id="sign_up">Register</button>
                     </div>
                   </div>
-                </form>
+                </formm>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -224,47 +224,6 @@
                 }
               });
             });
-
-            /*$("#submit").click(function(event){
-                event.preventDefault();
-                //this.id = 'submitted';
-                $("#submitted").html("please wait");
-                var newbook =  "<Book><Title>"+$('#title').val()+"</Title><Author>"+$('#author').val()+"</Author></Book>";
-            
-                var cdata;
-                cdata="\<\?xml version=\"1.0\" \?\>";
-                cdata+="<Books>";
-                cdata+="<Book><Title>Life of Pi</Title><Author>Yann Martel</Author></Book>";
-                cdata+=newbook;
-                cdata+="</Books>";
-
-                var options={};
-                options.url="server.php";
-                options.method="post";
-                options.data=cdata;
-                options.contentType="text/xml";
-
-                $.ajax(options).done(function(data){
-                    //working
-                    var clientid = $(data).find('Book');//.text();
-                    //alert(clientid);
-                    $(clientid).each(function() {
-                        $("#data").append($(this).find('Title').text()+', '+$(this).find('Author').text()+"<br>");
-                        //alert($(this).find('Title').text());
-                    });
-
-                    //response form server
-                    console.log(data);
-                    $("#submitted").html("Awsome!");
-
-                    var clientid = $(data).find('movie');
-                    $(clientid).each(function() {
-                        $("#data").append($(this).find('title').text()+ '; Plot::'+$(this).find('plot').text()+'<br>');
-                    });
-                }).error(function(){
-                    alert("error occured");
-                });
-            });*/
 
             $("#do_send_amount").click(function(){
                 $("#spinner").addClass("fa-spinner");
@@ -373,6 +332,71 @@
                         }
                     });
                 }
+            });
+
+            $("#sign_in").click(function(){
+                var login_data = "<ValidateLogin xmlns:i='http://www.w3.org/2001/XMLSchema-instance' xmlns='http://schemas.datacontract.org/2004/07/MTM.DTO'>"
+                    +"<ClientPassword>passwordbb</ClientPassword>"
+                    +"<ClientUsername>admin@codelabkenya.net</ClientUsername>"
+                    +"<Email>String</Email>"
+                    +"<FacebookId>String</FacebookId>"
+                    +"<Password>password</Password>"
+                    +"<TwitterId>String</TwitterId>"
+                    +"</ValidateLogin>";
+
+                var options={};
+                options.url="validateLogin.php";
+                options.method="post";
+                options.data=login_data;
+                options.contentType="text/xml";
+
+                $.ajax(options).done(function(data) {
+                    console.log(data);
+                    //var feedback = data.find('Message').text();
+                }).error(function(){
+                    console.log("error");
+                });
+            });
+
+            $("#sign_up").click(function(){
+                var reg_data = "<AddCustomer xmlns:i='http://www.w3.org/2001/XMLSchema-instance' xmlns='http://schemas.datacontract.org/2004/07/MTM.DTO'>"
+                    +"<ClientPassword>password</ClientPassword>"
+                    +"<ClientUsername>admin@codelabkenya.net</ClientUsername>"
+                    +"<Customer>"
+                    +"<Address1>String</Address1>"
+                    +"<Address2>String</Address2>"
+                    +"<Addresses>"
+                    +"<Address>"
+                    +"<Address1>String</Address1>"
+                    +"<Address2>String</Address2>"
+                    +"<City>String</City>"
+                    +"<Country>String</Country>"
+                    +"<State>String</State>"
+                    +"<Zipcode>String</Zipcode>"
+                    +"</Address>"
+                    +"</Addresses>"
+                    +"<AffiliateId>0</AffiliateId>"
+                    +"<BaseCurrency>String</BaseCurrency>"
+                    +"<City>String</City>"
+                    +"<CompanyName>String</CompanyName>"
+                    +"<Country>String</Country>"
+                    +"<CustomerType>PrivateCustomer</CustomerType>"
+                    +"<DOB>0001-01-01T00:00:00</DOB>"
+                    +"</customer>"
+                    +"</AddCustomer>";
+
+                var options={};
+                options.url="addCustomer.php";
+                options.method="post";
+                options.data=reg_data;
+                options.contentType="text/xml";
+
+                $.ajax(options).done(function(data) {
+                    console.log(data);
+                    //var feedback = data.find('Message').text();
+                }).error(function(){
+                    console.log("error");
+                });
             });
         </script>
     </body>

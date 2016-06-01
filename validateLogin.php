@@ -7,7 +7,7 @@ $newsXML = new SimpleXMLElement($xml);
 Header('Content-type: text/xml');
 $xml_data = $newsXML->asXML();
 
-$URL = "http://demo.mtmlive.net/webservice/api/xml/reply/GetMTCharge";
+$URL = "http://demo.mtmlive.net/webservice/api/xml/reply/ValidateLogin";
 
 $ch = curl_init($URL);
 curl_setopt($ch, CURLOPT_MUTE, 1);
@@ -20,4 +20,3 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 $output = curl_exec($ch);
 echo $output;
 curl_close($ch);
-
