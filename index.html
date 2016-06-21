@@ -335,9 +335,7 @@
             });
 
             $("#sign_in").click(function(){
-                var login_data = "<ValidateLogin xmlns:i='http://www.w3.org/2001/XMLSchema-instance' xmlns='http://schemas.datacontract.org/2004/07/MTM.DTO'>"
-                    //+"<ClientPassword>"+$("#password").val()+"</ClientPassword>"
-                    //+"<ClientEmail>"+$("#email").val()+"</ClientEmail>"
+                /*var login_data = "<ValidateLogin xmlns:i='http://www.w3.org/2001/XMLSchema-instance' xmlns='http://schemas.datacontract.org/2004/07/MTM.DTO'>"
                     +"<Email>"+$("#email").val()+"</Email>"
                     +"<Password>"+$("#password").val()+"</Password>"
                     +"</ValidateLogin>";
@@ -349,7 +347,7 @@
                 options.contentType="text/xml";
 
                 $.ajax(options).done(function(data) {
-                    //console.log(data);
+                    console.log(data);
                     var feedback = $(data).find('Message').first().text();
                     var msg = $(data).find('Result').first().text();
                     if(msg == "success"){
@@ -359,6 +357,26 @@
                     }
                 }).error(function(){
                     console.log("error");
+                });*/
+                $.ajax({
+                    type: "GET",
+                    url: 'http://demo.mtmlive.net/webservice/api/xml/reply/ValidateLogin',
+                    data:{"Email":$('#email').val(), "Password":$("#password").val()},
+                    async:true,
+                    dataType : 'jsonp',   //you may use jsonp for cross origin request
+                    crossDomain:true,
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader ("Authorization", "Basic " + btoa("administrator:password"));
+                    },
+                    success: function(data, status, xhr) {
+                        console.log(data.Message);
+                        if(data.Result == 'success'){
+                            window.location.replace("http://demo.mtmlive.net/Customer/default.aspx");
+                        }
+                    },
+                    error: function(){
+                        alert('error');
+                    }
                 });
             });
 
