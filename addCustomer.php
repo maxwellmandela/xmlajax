@@ -10,7 +10,7 @@ try {
     print $e->getMessage();
 }
 
-$URL = "";
+$URL = "http://demo.mtmlive.net/webservice/api/xml/reply/AddCustomer";
 
 $ch = curl_init($URL);
 curl_setopt($ch, CURLOPT_MUTE, 1);
