@@ -10,6 +10,7 @@
     </head>
 
     <style>
+    html, body, iframe { height: 100%; }
     #max{
         position: absolute;
         top: 0;
@@ -20,9 +21,12 @@
         z-index: 9999;
         background-color: blue;
     }
+    iframe{
+        overflow:hidden;
+    }
     </style>
 
-    <body class="container">
+    <body class="containerr">
         <div class="col-sm-6 col-sm-offset-3 jumbotron" style="margin-top:5%;">
             <select class="form-control" id="changecurrency">
                 <option selected="selected" disabled="true">Select Currency</option>
@@ -56,10 +60,17 @@
 
             <!-- Trigger the modal with a button -->
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-5">
                     <button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#loginModal">Sign In</button>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-2">
+                  <img src="url/to/your/image.jpg" alt="" usemap="#Map" />
+                  <map name="Map" id="Map">
+                      <area alt="" title="" href="#do" shape="poly" coords="158,297,55,227,8,192,9,186,21,181,35,171,35,167,50,162,70,146,100,121,130,107,156,85,160,145,227,139,280,141,310,138,315,154,321,211,319,240,260,236,211,236,181,236,158,237,130,241,162,263,163,249,162,244,159,241" />
+                      <area alt="" title="" href="#rollback" shape="poly" coords="195,270,190,281,188,299,187,340,190,374,235,374,327,374,348,375,354,429,380,412,496,334,499,316,441,277,387,245,350,214,352,263" />
+                  </map>
+                </div>
+                <div class="col-sm-5">
                     <button type="button" class="btn btn-warning btn-block" data-toggle="modal" data-target="#registerModal">Create Free Account</button>
                 </div>
             </div>
@@ -74,130 +85,6 @@
                     <button type="button" class="btn btn-warning btn-block">Track</button>
                 </div>
             </div>
-
-            <!--Login Modal -->
-            <div id="loginModal" class="modal fade" role="dialog">
-              <div class="modal-dialog">
-
-                <!-- Modal content-->
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Sign In</h4>
-                    <small>Sign in using your registered account:</small>
-                  </div>
-                  <div class="modal-body">
-                    <formm class="form-horizontal" role="form" autocomplete="off" method="post" action="">
-                      <div class="form-group">
-                        <label class="control-label col-sm-2" for="email">Email:</label>
-                        <div class="col-sm-10">
-                          <input type="email" class="form-control" id="email" placeholder="Enter email" autocomplete="off">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="control-label col-sm-2" for="password">Password:</label>
-                        <div class="col-sm-10">
-                          <input type="password" class="form-control" id="password" placeholder="Enter password" autocomplete="off">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                          <div class="checkbox">
-                            <label><input type="checkbox"> Remember me</label>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                          <button type="submit" class="btn btn-warning" id="sign_in">Sign In</button>
-                        </div>
-                      </div>
-                    </formm>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-            <!-- Register Modal -->
-            <div id="registerModal" class="modal fade" role="dialog">
-          <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Create Your Account</h4>
-                <small>Create your free account:</small>
-              </div>
-              <div class="modal-body">
-                <formm class="form-horizontal" role="form" autocomplete="off">
-                  <div class="form-group">
-                    <label class="control-label col-sm-2" for="first_name">Name:</label>
-                    <div class="col-sm-5">
-                      <input type="text" class="form-control" id="first_name" placeholder="Enter first name">
-                    </div>
-                    <div class="col-sm-5">
-                      <input type="text" class="form-control" id="last_name" placeholder="Enter last name">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="control-label col-sm-2" for="address">Address:</label>
-                    <div class="col-sm-5">
-                      <input type="text" class="form-control" id="address" placeholder="Enter Address">
-                    </div>
-                    <div class="col-sm-5">
-                      <input type="text" class="form-control" id="zip" placeholder="Enter Zip Code">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="control-label col-sm-2" for="country">Country:</label>
-                    <div class="col-sm-5">
-                      <select class="form-control" id="country">
-                        <option value="Kenya">Kenya</option>
-                        <option value="Rwanda">Rwanda</option>
-                        <option value="Tanzania">Tanzania</option>
-                        <option value="Uganda">Uganda</option>
-                        <option value="United States">United States</option>
-                      </select>
-                    </div>
-                    <div class="col-sm-5">
-                      <input type="text" class="form-control" id="reg_emailcity" placeholder="City/Town">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="control-label col-sm-2" for="reg_email">Email:</label>
-                    <div class="col-sm-10">
-                      <input type="email" class="form-control" id="reg_email" placeholder="Enter email">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="control-label col-sm-2" for="reg_password">Password:</label>
-                    <div class="col-sm-5"> 
-                      <input type="password" class="form-control" id="reg_password" placeholder="Enter password">
-                    </div>
-                    <div class="col-sm-5"> 
-                      <input type="password" class="form-control" id="password_confirm" placeholder="Confirm password">
-                    </div>
-                  </div>
-                  <div class="form-group"> 
-                    <div class="col-sm-offset-2 col-sm-10">
-                      <button type="submit" class="btn btn-inverse" id="sign_up">Register</button>
-                    </div>
-                  </div>
-                </formm>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
         </div>
 
         <script>
@@ -335,9 +222,12 @@
             });
 
             $("#sign_in").click(function(){
-                /*var login_data = "<ValidateLogin xmlns:i='http://www.w3.org/2001/XMLSchema-instance' xmlns='http://schemas.datacontract.org/2004/07/MTM.DTO'>"
+                $("#sign_in").html("hold on..");
+                var login_data = "<ValidateLogin xmlns:i='http://www.w3.org/2001/XMLSchema-instance' xmlns='http://schemas.datacontract.org/2004/07/MTM.DTO'>"
                     +"<Email>"+$("#email").val()+"</Email>"
                     +"<Password>"+$("#password").val()+"</Password>"
+                    +"<ClientUsername>administrator</ClientUsername>"
+                    +"<ClientPassword>password</ClientPassword>"
                     +"</ValidateLogin>";
 
                 var options={};
@@ -347,30 +237,32 @@
                 options.contentType="text/xml";
 
                 $.ajax(options).done(function(data) {
+                    $("#sign_in").html("done");
                     console.log(data);
                     var feedback = $(data).find('Message').first().text();
                     var msg = $(data).find('Result').first().text();
+                    $("#fd").html(feedback +', message: '+msg);
                     if(msg == "success"){
-                        window.location.replace("http://demo.mtmlive.net/Customer/default.aspx");
+                        //window.location.href = "http://demo.mtmlive.net/Customer/default.aspx";
+                        //$("#fd").html(feedback +', message: '+msg);
                     }else{
                         alert(feedback);
                     }
                 }).error(function(){
+                    $("#sign_in").html("please retry");
                     console.log("error");
-                });*/
-                $.ajax({
+                });
+
+                /*$.ajax({
                     type: "GET",
-                    url: 'http://demo.mtmlive.net/webservice/api/xml/reply/ValidateLogin',
+                    url: 'validateLogin.php',
                     data:{
                         "Email":$('#email').val(),
                         "Password":$("#password").val()
                     },
                     async:true,
-                    dataType : 'jsonp',   //you may use jsonp for cross origin request
+                    dataType : 'jsonp',
                     crossDomain:true,
-                    beforeSend: function (xhr) {
-                        xhr.setRequestHeader ("Authorization", auth);
-                    },
                     success: function(data, status, xhr) {
                         console.log(data.Message);
                         if(data.Result == 'success'){
@@ -380,7 +272,7 @@
                     error: function(){
                         alert('error');
                     }
-                });
+                });*/
             });
 
             $("#sign_up").click(function(){
@@ -412,7 +304,7 @@
                     "SkipDuplicationCheck": false
                 }
 
-                /*var reg_data = "<AddCustomer xmlns='http://schemas.datacontract.org/2004/07/MTM.DTO' xmlns:i='http://www.w3.org/2001/XMLSchema-instance'>"
+                var reg_data = "<AddCustomer xmlns='http://schemas.datacontract.org/2004/07/MTM.DTO' xmlns:i='http://www.w3.org/2001/XMLSchema-instance'>"
                     +"    <ClientPassword>"+$("#reg_password").val()+"</ClientPassword>"
                     +"    <Password>"+$("#reg_password").val()+"</Password>"
                     +"    <Customer>"
@@ -442,13 +334,15 @@
                     console.log(data);
                 }).error(function(){
                     console.log("error");
-                });*/
+                });
+
+                /*
                 $.ajax({
                     type: "POST",
                     url: 'http://demo.mtmlive.net/webservice/api/xml/reply/AddCustomer',
                     data:real_data,
                     async:true,
-                    dataType : 'jsonp',   //you may use jsonp for cross origin request
+                    dataType : 'jsonp',
                     crossDomain:true,
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader ("Authorization", "Basic " + btoa("administrator:password"));
@@ -462,7 +356,7 @@
                     error: function(){
                         alert('error');
                     }
-                });
+                });*/
             });
         </script>
     </body>

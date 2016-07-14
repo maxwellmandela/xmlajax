@@ -1,9 +1,4 @@
 <?php
-//header('Content-type: application/xml');
-//$xml =  file_get_contents("http://demo.mtmlive.net/webservice/api/xml/reply/GetExchangeRates");
-//echo $xml;
-
-//$currency = file_get_contents('php://input');
 $curr = $_GET['currency'];
 
 function xml2Json($url) {
@@ -23,9 +18,6 @@ foreach($exchange_rates as $exch){
 	if($exch->ToCurrency == $curr){
 		$rate = json_encode($exch);
 		print $rate;
-		//print "<pre>";
-		//print_r($exch);
-		//print "</pre>";
 		break;
 	}
 }

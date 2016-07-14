@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>upesi</title>
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        <link href="bootstrap.min.css" rel="stylesheet">
+        <script src="bootstrap.min.js"></script>
+        <script src="https://use.fontawesome.com/3277c51ba8.js"></script>
+    </head>
+
+    <style>
+    html, body, iframe { height: 100%; }
+    #max{
+        position: absolute;
+        top: 0;
+        margin-top: -1530px;
+        left: 1%;
+        height: 300px;
+        width: 500px;
+        z-index: 9999;
+        background-color: blue;
+    }
+    iframe{
+        overflow:hidden;
+    }
+    </style>
+
+    <body>
+      <iframe src="http://demo.mtmlive.net/Customer/"
+      style="zoom:0.60; width:100%; overflow-x:hidden; background-color:#ffffff;"
+      frameborder="0" id="cust"></iframe>
+
+      <script>
+        $('#cust').load(function(){
+          var take_home = document.getElementById("cust").src;
+          if(take_home == 'demo.mtmlive.net/Customer/login.aspx?action=logout'){
+            window.location.href = "home.html";
+          }
+          //alert(take_home);
+        });
+      </script>
+    </body>
+</html>
